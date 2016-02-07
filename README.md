@@ -134,6 +134,10 @@ Default "Python Flake8 Lint" plugin config: <kbd>Preferences</kbd>-><kbd>Package
 	// import order style: "cryptography" or "google"
 	// See also: https://github.com/public/flake8-import-order#configuration
 	"import-order-style": "cryptography",
+	// Import names that should be considered local to your application
+	// See also: https://github.com/public/flake8-import-order#configuration
+	"application-import-names": [],
+
 	// turn off complexity check (set number > 0 to check complexity level)
 	"complexity": -1,
 
@@ -199,6 +203,7 @@ You could define per-project config for "Python Flake8 Lint". Use <kbd>Project</
 			"naming": true,
 			"import-order": true,
 			"import-order-style": "google",
+			"application-import-names": [],
 			"complexity": -1,
 			"pep8_max_line_length": 79,
 			"select": [],
