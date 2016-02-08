@@ -47,7 +47,8 @@ PROJECT_SETTINGS_KEYS = (
     'python_interpreter', 'builtins', 'pyflakes', 'pep8', 'pydocstyle',
     'naming', 'debugger', 'import_order', 'import_order_style', 'complexity',
     'pep8_max_line_length', 'select', 'ignore', 'ignore_files',
-    'use_flake8_global_config', 'use_flake8_project_config',
+    'use_flake8_global_config', 'use_flake8_project_config', 
+    'application_import_names'
 )
 FLAKE8_SETTINGS_KEYS = (
     'ignore', 'select', 'ignore_files', 'pep8_max_line_length'
@@ -214,6 +215,10 @@ class Flake8LintSettings(object):
             self.import_order_style = import_order_style
         else:
             self.import_order_style = 'cryptography'
+
+        # get local import names
+        self.application_import_names = self.settings.get(
+            'application_import_names', [])
 
         # turn off complexity check (set number > 0 to check complexity level)
         try:

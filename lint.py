@@ -125,12 +125,13 @@ class FlakesReporter(object):
 class ImportOrderLinter(ImportOrderChecker):
     """Import order linter."""
 
-    def __init__(self, tree, filename, lines, order_style='cryptography'):
+    def __init__(self, tree, filename, lines, order_style='cryptography', import_names=[]):
         """Initialize linter."""
         super(ImportOrderLinter, self).__init__(filename, tree)
         self.lines = lines
         self.options = {
             'import_order_style': order_style,
+            'application_import_names': import_names
         }
 
     def load_file(self):
@@ -264,7 +265,9 @@ def lint(lines, settings):
         # lint with import order
         if settings.get('import-order', True):
             order_style = settings.get('import_order_style')
-            import_linter = ImportOrderLinter(tree, None, lines, order_style)
+            application_imports = settings.get('application_import_names', [])
+            import_linter = ImportOrderLinter(
+                tree, None, lines, order_style, application_imports)
             for error in import_linter.run():
                 warnings.append(error[0:3])
 
