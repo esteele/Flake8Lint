@@ -41,7 +41,8 @@ from pyflakes import (
     checker as pyflakes_checker
 )
 import ploneapi
-
+import plone_hasattr
+import plone_deprecated
 
 patch_pyflakes()
 
@@ -66,7 +67,9 @@ def tools_versions():
         ('naming', pep8ext_naming.__version__),
         ('debugger', flake8_debugger.__version__),
         ('import-order', flake8_import_order_version),
-        ('ploneapi', ploneapi.PloneAPIChecker.version)
+        ('ploneapi', ploneapi.PloneAPIChecker.version),
+        ('plone-hasattr', plone_hasattr.PloneHasattrChecker.version),
+        ('plone-deprecated', plone_deprecated.Flake8Deprecated.version)
     )
 
 
@@ -275,6 +278,17 @@ def lint(lines, settings):
             checker = ploneapi.PloneAPIChecker(lines=lines)
             for error in checker.run():
                 warnings.append(error[0:3])
+
+        if settings.get('plone-deprecated', True):
+            checker = plone_deprecated.Flake8Deprecated(lines=lines)
+            for error in checker.run():
+                warnings.append(error[0:3])
+
+        if settings.get('plone-hasattr', True):
+            checker = plone_hasattr.PloneHasattrChecker(lines=lines)
+            for error in checker.run():
+                warnings.append(error[0:3])
+
 
         # check complexity
         try:
